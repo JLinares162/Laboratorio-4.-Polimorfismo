@@ -5,20 +5,41 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * La clase Kayac representa la plataforma para reservas de vuelo y gestión de usuarios.
+ * Implementa la interfaz iKayac.
+ */
+
 class Kayac implements iKayac {
     private String usernameActual;
     private ArrayList<Usuario> usuarios;
     private ArrayList<Reserva> reservas;
+
+    /**
+     * Constructor de la clase Kayac.
+     * Inicializa las listas de usuarios y reservas.
+     */
 
     public Kayac() {
         this.usuarios = new ArrayList<>();
         this.reservas = new ArrayList<>();
     }
 
+    /**
+     * Establece el nombre de usuario actual.
+     *
+     * @param usernameActual El nombre de usuario a establecer.
+     */
+
     public void UsernameActual(String usernameActual) {
         this.usernameActual = usernameActual;
     }
     
+    /**
+     * Método para leer usuarios desde un archivo CSV.
+     * Lee datos del archivo 'usuarios.csv' y los almacena en la lista de usuarios.
+     */
+
     public void leerUsuario() {
         String csvFile = "usuarios.csv";
         try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
@@ -34,6 +55,11 @@ class Kayac implements iKayac {
             e.printStackTrace();
         }
     }
+
+     /**
+     * Método para leer reservas desde un archivo CSV.
+     * Lee datos del archivo 'reservas.csv' y los almacena en la lista de reservas.
+     */
 
     public void leerReserva() {
         String csvFile = "reservas.csv";
@@ -59,6 +85,14 @@ class Kayac implements iKayac {
         }
     }
     
+    /**
+     * Método para realizar el inicio de sesión.
+     * Comprueba si el usuario y la contraseña coinciden con alguna cuenta existente.
+     *
+     * @param username El nombre de usuario.
+     * @param password La contraseña del usuario.
+     * @return El usuario que inicia sesión, si es válido; de lo contrario, retorna null.
+     */
 
     @Override
     public Usuario login(String username, String password) {
@@ -107,6 +141,17 @@ class Kayac implements iKayac {
         return null;  // Usuario no encontrado
     }
 
+    /**
+     * Método para realizar una reserva de vuelo.
+     * Crea una nueva reserva basada en el tipo de usuario y la almacena en la lista de reservas.
+     *
+     * @param fechaVuelo       La fecha del vuelo.
+     * @param tipoVuelo        El tipo de vuelo (ida y vuelta o solo ida).
+     * @param cantidadBoletos  La cantidad de boletos reservados.
+     * @param aerolinea        La aerolínea del vuelo.
+     * @param username         El nombre de usuario.
+     */
+
     public void reservacion(String fechaVuelo, boolean tipoVuelo, int cantidadBoletos, String aerolinea, String username) {
         Usuario usuario = buscarUsuarioPorUsername(username);
 
@@ -132,6 +177,17 @@ class Kayac implements iKayac {
             System.out.println("Usuario no encontrado. No se pudo realizar la reserva.");
         }
     }
+
+    /**
+     * Método para confirmar una reserva.
+     * Confirma la reserva según el tipo (Premium o Gratis) y completa los detalles requeridos.
+     *
+     * @param numeroTarjeta    El número de tarjeta para la reserva.
+     * @param cuotas           La cantidad de cuotas para el pago.
+     * @param claseVuelo       La clase de vuelo seleccionada.
+     * @param numeroAsiento    El número de asiento seleccionado.
+     * @param cantidadMaletas  La cantidad de maletas para el vuelo.
+     */
 
     @Override
     public void confirmación(String numeroTarjeta, int cuotas, String claseVuelo, int numeroAsiento, int cantidadMaletas) {
@@ -189,6 +245,12 @@ class Kayac implements iKayac {
         return ultimaReserva.imprimirItinerario();
     }
 
+    /**
+     * Método para cambiar la contraseña del usuario actual.
+     *
+     * @param nuevaPassword La nueva contraseña a establecer.
+     */
+
     public void cambiarPassword(String nuevaPassword) {
         Usuario usuario = buscarUsuarioPorUsername(usernameActual);
 
@@ -213,6 +275,10 @@ class Kayac implements iKayac {
             System.out.println("Usuario no encontrado. No se pudo cambiar la contraseña.");
         }
     }
+
+     /**
+     * Método para cambiar el tipo de usuario (Gratis <-> Premium) del usuario actual.
+     */
 
     @Override
     public void cambiarTipoUsuario(){
@@ -243,6 +309,11 @@ class Kayac implements iKayac {
             System.out.println("Usuario no encontrado. No se pudo cambiar el plan.");
         }
     }
+
+    /**
+     * Método para guardar la información de las reservas en un archivo CSV.
+     * Escribe los datos de las reservas en el archivo 'reservas.csv'.
+     */
 
     @Override
     public void guardarReserva() {

@@ -1,5 +1,9 @@
+/**
+ * La clase Reserva representa una reserva de vuelo en el sistema.
+ */
 public class Reserva {
 
+    // Atributos de la clase Reserva
     protected String fechaVuelo;
     protected boolean tipoVuelo;
     protected int cantidadBoletos;
@@ -10,9 +14,23 @@ public class Reserva {
     protected int numeroAsiento;
     protected int cantidadMaletas;
     protected Usuario usuario;
-    
+
+    /**
+     * Constructor para crear una reserva de vuelo.
+     *
+     * @param fechaVuelo       La fecha del vuelo.
+     * @param tipoDeVuelo      El tipo de vuelo (ida y vuelta o solo ida).
+     * @param cantidadBoletos  La cantidad de boletos reservados.
+     * @param aerolinea        La aerolínea del vuelo.
+     * @param numeroTarjeta    El número de tarjeta de crédito/debito para pagar la reserva.
+     * @param cuotas           La cantidad de cuotas para el pago.
+     * @param claseVuelo       La clase de vuelo (ejemplo: económica, ejecutiva, etc.).
+     * @param numeroAsiento    El número de asiento reservado.
+     * @param cantidadMaletas  La cantidad de maletas para el vuelo.
+     * @param usuario          El usuario que realiza la reserva.
+     */
     public Reserva(String fechaVuelo, boolean tipoDeVuelo, int cantidadBoletos, String aerolinea, String numeroTarjeta,
-            int cuotas, String claseVuelo, int numeroAsiento, int cantidadMaletas, Usuario usuario) {
+                   int cuotas, String claseVuelo, int numeroAsiento, int cantidadMaletas, Usuario usuario) {
         this.fechaVuelo = fechaVuelo;
         this.tipoVuelo = tipoDeVuelo;
         this.cantidadBoletos = cantidadBoletos;
@@ -125,12 +143,17 @@ public class Reserva {
         setCuotas(cuotas);
     }
 
-    public String imprimirItinerario(){
+    /**
+     * Método para imprimir un itinerario con detalles de la reserva.
+     *
+     * @return Una cadena que contiene detalles del itinerario de vuelo.
+     */
+    public String imprimirItinerario() {
         return "Fecha de vuelo: " + fechaVuelo +
-           "\nTipo de vuelo: " + (tipoVuelo ? "Ida y vuelta" : "Solo ida") +
-           "\nCantidad de boletos: " + cantidadBoletos +
-           "\nAerolínea: " + aerolinea +
-           // Otros atributos según sea necesario
-           "\nUsuario: " + (usuario != null ? usuario.getUsername() : "Desconocido");
+               "\nTipo de vuelo: " + (tipoVuelo ? "Ida y vuelta" : "Solo ida") +
+               "\nCantidad de boletos: " + cantidadBoletos +
+               "\nAerolínea: " + aerolinea +
+               // Otros atributos según sea necesario
+               "\nUsuario: " + (usuario != null ? usuario.getUsername() : "Desconocido");
     }
 }

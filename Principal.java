@@ -39,6 +39,7 @@ public class Principal {
                     scanner.nextLine();
                     switch (opcion) {
                         case 1:
+                            boolean menuOp = true;
                             System.out.println("---- Modo Ingresar ----");
                             System.out.print("Ingrese su nombre de usuario: ");
                             String nombre= scanner.nextLine();
@@ -86,14 +87,25 @@ public class Principal {
                                             System.out.print("Ingrese la cantidad de cuotas: ");
                                             int cuotas = scanner.nextInt();
                                             scanner.nextLine(); // Consumir la nueva línea pendiente
-                                            System.out.print("Ingrese la clase de vuelo (Coach o Primera Clase): ");
-                                            String claseVuelo = scanner.nextLine();
-                                            System.out.print("Ingrese el número de asiento: ");
-                                            String numeroAsiento = scanner.nextLine();
-                                            System.out.print("Ingrese la cantidad de maletas: ");
-                                            int cantidadMaletas = scanner.nextInt();
-                                            scanner.nextLine(); // Consumir la nueva línea pendiente
-                                            kayac.confirmación(numeroTarjeta, cuotas, claseVuelo, numeroAsiento, cantidadMaletas);
+                                            
+                                            Usuario usuarioActual = usuario;
+                                            if (usuarioActual.getTipo().equals("premium")) {
+                                                System.out.print("Ingrese el número de asiento: ");
+                                                int numeroAsiento = scanner.nextInt();
+                                                scanner.nextLine();
+                                                System.out.print("Ingrese la cantidad de maletas: ");
+                                                int cantidadMaletas = scanner.nextInt();
+                                                scanner.nextLine(); // Consumir la nueva línea pendiente
+                                                kayac.confirmación(numeroTarjeta, cuotas, "Primera Clase", numeroAsiento, cantidadMaletas);
+                                            } else {
+                                                // Usuario gratis, menos información requerida
+                                                System.out.println("Cantidad de maletas para clientes Gratis: 1");
+                                                System.out.print("Ingrese la clase de vuelo (Coach o Primera Clase): ");
+                                                String claseVuelo = scanner.nextLine();
+                                                System.out.print("Ingrese el número de asiento: ");
+                                                int numeroAsiento = scanner.nextInt();
+                                                kayac.confirmación(numeroTarjeta, cuotas, claseVuelo, numeroAsiento, 1);
+                                            }
                                             break;
                                         case 3:
                                             boolean op = true;
@@ -130,13 +142,15 @@ public class Principal {
                                                         break;
                                                 }
                                             } while (op);
+                                            break;
                                         case 4:
+                                            menuOp = false;
                                             break;
                                         default:
                                             System.out.println("Opción no válida. Inténtalo de nuevo.");
                                             break;
                                     }
-                                } while (true);
+                                } while (menuOp);
                             } else {
                                 System.out.println("Credenciales incorrectas. Volviendo al menú principal");
                             }

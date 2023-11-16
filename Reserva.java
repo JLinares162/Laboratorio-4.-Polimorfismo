@@ -77,7 +77,7 @@ public class Reserva {
         this.cuotas = cuotas;
     }
 
-    public String isClaseVuelo() {
+    public String getClaseVuelo() {
         return claseVuelo;
     }
 

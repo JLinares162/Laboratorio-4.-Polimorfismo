@@ -39,4 +39,8 @@ class Gratis extends Reserva implements iReserva {
     public Gratis(String fechaVuelo, boolean tipoVuelo, int cantidadBoletos, String aerolinea, String username, int numeroTarjeta, int cuotas, int claseVuelo, int cantidadMaletas, Usuario usuario) {
         super(fechaVuelo, tipoVuelo, cantidadBoletos, aerolinea, numeroTarjeta, cuotas, claseVuelo, cantidadMaletas, usuario);
     }
+
+    public String getClaseVuelo() {
+        return claseVuelo;
+    }
 }

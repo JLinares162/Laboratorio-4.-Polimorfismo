@@ -114,12 +114,12 @@ class Kayac implements iKayac {
             Reserva nuevaReserva;
     
             if ("premium".equals(usuario.getTipo())) {
-                nuevaReserva = new Premium(fechaVuelo, tipoVuelo, cantidadBoletos, aerolinea, username, cantidadBoletos, aerolinea, cantidadBoletos, cantidadBoletos, usuario);
+                nuevaReserva = new Premium(fechaVuelo, tipoVuelo, cantidadBoletos, aerolinea, " ",0, "Primera Clase", 0, 0, usuario);
                 System.out.println("Reserva premium realizada");
             } else {
-                nuevaReserva = new Gratis(fechaVuelo, tipoVuelo, cantidadBoletos, aerolinea, username, cantidadBoletos, aerolinea, cantidadBoletos, cantidadBoletos, usuario);
+                nuevaReserva = new Gratis(fechaVuelo, tipoVuelo, cantidadBoletos, aerolinea, " ",0, " ", 0, 1, usuario);
                 System.out.println("Reserva gratis realizada");
-            }
+            } 
     
             reservas.add(nuevaReserva);
     
@@ -134,7 +134,8 @@ class Kayac implements iKayac {
     }
 
     @Override
-    public void confirmación(String numeroTarjeta, int cuotas, String claseVuelo, String numeroAsiento, int cantidadMaletas) {
+    public void confirmación(String numeroTarjeta, int cuotas, String claseVuelo, int numeroAsiento, int cantidadMaletas) {
+        leerReserva();
         if (reservas.isEmpty()) {
             System.out.println("No hay reservas disponibles para confirmar.");
             return;
@@ -151,7 +152,7 @@ class Kayac implements iKayac {
         }
     }
     
-    private void confirmarGratis(Gratis reserva, String numeroTarjeta, int cuotas, String claseVuelo, String numeroAsiento, int cantidadMaletas) {
+    private void confirmarGratis(Gratis reserva, String numeroTarjeta, int cuotas, String claseVuelo, int numeroAsiento, int cantidadMaletas) {
         reserva.definirNumeroDeTarjeta(numeroTarjeta);
         reserva.definirCantidadCuotas(cuotas);
         reserva.seleccionarClase(claseVuelo);
@@ -163,13 +164,13 @@ class Kayac implements iKayac {
         System.out.println("Confirmación realizada con éxito para la reserva gratis.");
     }
     
-    private void confirmarPremium(Premium reserva, String numeroTarjeta, int cuotas, String claseVuelo, String numeroAsiento, int cantidadMaletas) {
+    private void confirmarPremium(Premium reserva, String numeroTarjeta, int cuotas, String claseVuelo, int numeroAsiento, int cantidadMaletas) {
         reserva.definirNumeroDeTarjeta(numeroTarjeta);
         reserva.definirCantidadCuotas(cuotas);
         reserva.seleccionarClase(claseVuelo);
-        reserva.seleccionarNumeroDeAsiento();
-        reserva.cantidadDeMaletas();
-    
+        reserva.setNumeroAsiento(numeroAsiento);
+        reserva.setCantidadMaletas(cantidadMaletas);
+
         // Guardar la reserva en archivo CSV
         guardarReserva();
     
@@ -246,15 +247,25 @@ class Kayac implements iKayac {
     @Override
     public void guardarReserva() {
         String csvFile = "reservas.csv";
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFile, true))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFile))) {
             // Escribir encabezados si el archivo está vacío
             if (reservas.isEmpty()) {
                 writer.write("FechaVuelo,TipoVuelo,CantidadBoletos,Aerolinea,NumeroTarjeta,Cuotas,ClaseVuelo,NumeroAsiento,CantidadMaletas,Username\n");
             }
-
+    
             // Escribir datos de reservas
             for (Reserva reserva : reservas) {
-                
+                String claseVuelo = "";
+    
+                if (reserva instanceof Premium) {
+                    claseVuelo = ((Premium) reserva).getClaseVuelo();
+                } else if (reserva instanceof Gratis) {
+                    claseVuelo = ((Gratis) reserva).getClaseVuelo();
+                }
+    
+                writer.write(reserva.getFechaVuelo() + "," + reserva.isTipoVuelo() + "," + reserva.getCantidadBoletos() + "," + reserva.getAerolinea() + "," 
+                    + reserva.getNumeroTarjeta() + "," + reserva.getCuotas() + "," + claseVuelo + "," + reserva.getNumeroAsiento() + "," 
+                        + reserva.getCantidadMaletas() + "," + reserva.getUsuario().getUsername() + "\n");
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -6,7 +6,6 @@ public class Premium extends Reserva implements iReserva{
             int cuotas, String claseVuelo, int numeroAsiento, int cantidadMaletas, Usuario usuario) {
         super(fechaVuelo, tipoDeVuelo, cantidadBoletos, aerolinea, numeroTarjeta, cuotas, claseVuelo, numeroAsiento,
                 cantidadMaletas, usuario);
-        //TODO Auto-generated constructor stub
     }
 
     @Override
@@ -45,4 +44,8 @@ public class Premium extends Reserva implements iReserva{
         super(fechaVuelo, tipoVuelo, cantidadBoletos, aerolinea, numeroTarjeta, cuotas, claseVuelo, cantidadMaletas, usuario);
     }
     
+    public String getClaseVuelo() {
+        claseVuelo = "Primera Clase" ;
+        return claseVuelo;
+    }
 }

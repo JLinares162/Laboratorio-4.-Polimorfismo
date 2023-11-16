@@ -5,7 +5,7 @@ interface iKayac {
     public void cambiarPassword(String nuevaPassword);
     public void cambiarTipoUsuario();
     public void reservacion(String fechaVuelo, boolean tipoVuelo, int cantidadBoletos, String areolinea, String username);
-    public void confirmación(String numeroTarjeta, int cuotas, String claseVuelo, String numeroAsiento, int cantidadMaletas);
+    public void confirmación(String numeroTarjeta, int cuotas, String claseVuelo, int numeroAsiento, int cantidadMaletas);
     public String itinerario();
     public void guardarUsuario();
     public void guardarReserva();
